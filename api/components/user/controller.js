@@ -14,31 +14,24 @@ module.exports = function(injectedStore){
     }
 
     async function deleteUser(userId) {
-        await store.findOneAndUpdate({ userId }, { deleted_at: new Date() });
-        const getDeleted = await this.getUser(_id);
+        const getDeleted = await store.destroy({ where: { userId: userId }});
         return getDeleted;
     }
 
     async function getUsers(){
-        const users = await store.find( { deleted_at: null });
+        const users = await store.findAll();
         return users || [];
     }
 
     async function getUser(userId) {
-        const user = await store.findOne({ _id: userId });
-        return user || false;
+        const user = await store.findAll({ where: { userId: userId }});
+        return user !== [] ? user : false;
     }
 
     async function getUserByEmail(email) {
-        const user = await store.findOne({ email });
-        return user || false;
+        const user = await store.findOne({ where: { email: email }});
+        return user;
     }
-
-    async function getUsersBySkills(skills) {
-        const usersBySkills = await store.find({ "skills": { $in : skills } });
-        return usersBySkills || [];
-    }
-
 
     return {
         createUser,
@@ -46,7 +39,6 @@ module.exports = function(injectedStore){
         deleteUser,
         getUser,
         getUsers,
-        getUserByEmail,
-        getUsersBySkills
+        getUserByEmail
     }
 }

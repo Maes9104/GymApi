@@ -4,12 +4,12 @@ const boom = require('@hapi/boom');
 
 function userService(injectedStore) {
     let store = injectedStore;
-    //const Controller = controller(store);
+    const Controller = controller(store);
 
     const getUsers = async (req, res, next) => {
         try{
             const users = await Controller.getUsers();
-            response.succes(req, res, users, 200);
+            response.success(req, res, users, 200);
         } catch (error) {
             next(boom.boomify(error, { statusCode: 500 }));
         }

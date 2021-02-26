@@ -13,16 +13,18 @@ module.exports = (connection, Sequelize) => {
         type: Sequelize.STRING(100),
         allowNull: false
       },
-      mail: {
+      email: {
           type: Sequelize.STRING(150),
           allowNull: false
       },
-    //   gymId: {
-    //       type: Sequelize.UUID,
-    //       references: {
-    //           model
-    //       }
-    //   }
+      password: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      role: {
+        type: Sequelize.STRING(20),
+        allowNull: false
+      }
     });
   
     return User;
