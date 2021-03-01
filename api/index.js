@@ -16,7 +16,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-db.connection.sync({force: true});
+db.connection.sync({ force: false });
 
 //Routes
 authRoutes(app, db.users);

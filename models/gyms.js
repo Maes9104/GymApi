@@ -12,7 +12,7 @@ module.exports = (connection, Sequelize) => {
         userCount: {
             type: Sequelize.INTEGER,
             defaultValue: 0
-        }
+        },
     });
     return Gym;
 }

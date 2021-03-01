@@ -23,7 +23,7 @@ function errorHandler(err, req, res, next) {
   const { 
     statusCode, 
     payload 
-  } = err;
+  } = err.output;
   res.status(statusCode);
   res.json(withErrorStack(payload, err.stack));
 }

@@ -33,12 +33,20 @@ module.exports = function(injectedStore){
         return user;
     }
 
+    async function setAdminUser(userId){
+        const user = await getUser(userId);
+        user.role = 'Admin';
+        user.save();
+        return user;
+    }
+
     return {
         createUser,
         updateUser,
         deleteUser,
         getUser,
         getUsers,
-        getUserByEmail
+        getUserByEmail,
+        setAdminUser
     }
 }

@@ -27,8 +27,6 @@ function authService(injectedStore) {
                     if (error)
                         next(error);
 
-                    console.log(user);
-
                     const { userId: id, name, email, role } = user;
                     const payload = {
                         sub: id,
@@ -54,7 +52,6 @@ function authService(injectedStore) {
         const user = req.body;
         try {
             const findUser = await UserController.getUserByEmail(user.email);
-            console.log(findUser);
             if (findUser)
                 next(boom.unauthorized('Email already exists'));
             else {

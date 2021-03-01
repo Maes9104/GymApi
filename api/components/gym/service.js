@@ -9,7 +9,9 @@ function gymService(injectedStore) {
     const getGyms = async (req, res, next) => {
         try{
             const gyms = await Controller.getGyms();
+            
             response.success(req, res, gyms, 200);
+
         } catch (error) {
             next(boom.boomify(error, { statusCode: 500 }));
         }
@@ -35,7 +37,8 @@ function gymService(injectedStore) {
             const createdGym = await Controller.createGym(data);
             response.success(req, res, createdGym, 201);
         } catch (error) {
-            next(boom.boomify(error, { statusCode: 500 }));
+            console.log(error);
+            next(boom.boomify(error, { statusCode: 404 }));
         }
     };
 
@@ -69,12 +72,46 @@ function gymService(injectedStore) {
         }
     };
 
+    const getGymsByCity = async (req, res, next) => {
+        const { params } = req;
+        try {
+            const gyms = await Controller.getGymsByCity(params.cityId);
+            response.success(req, res, gyms, 200);
+        } catch (error) {
+            next(boom.boomify(error, { statusCode: 500 }));
+        }
+    }
+
+    const gymSubscribe = async(req, res, next) => {
+        const { params } = req;
+        const userId = req.user.dataValues.userId;
+        try {
+            const subscribed = await Controller.gymSubscribe(userId, params.gymId);
+            response.success(req, res, subscribed, 201);
+        } catch (error) {
+            next(boom.boomify(error, { statusCode: 500 }));
+        }
+    }
+
+    const getUsersByGym = async(req, res, next) => {
+        const { params } = req;
+        try {
+            const gymUsers = await Controller.getUsersByGym(params.gymId);
+            response.success(req, res, gymUsers, 200);
+        } catch (error) {
+            next(boom.boomify(error, { statusCode: 500 }));
+        }
+    }
+
     return {
         createGym,
         updateGym,
         deleteGym,
         getGyms,
-        getGym
+        getGym,
+        getGymsByCity,
+        gymSubscribe,
+        getUsersByGym
     }
 }
 

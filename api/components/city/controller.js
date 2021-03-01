@@ -1,3 +1,5 @@
+const db = require("../../../store/db");
+
 module.exports = function(injectedStore){
     let store = injectedStore;
 
@@ -19,12 +21,18 @@ module.exports = function(injectedStore){
     }
 
     async function getCities(){
-        const cities = await store.findAll();
+        const cities = await store.findAll({ include: ["gyms"]});
         return cities || [];
     }
 
     async function getCity(cityId) {
-        const city = await store.findAll({ where: { cityId: cityId }});
+        const city = await store.findAll({ 
+            where: { cityId: cityId }, 
+            include: [{
+                model: db.gyms,
+                as: "Gym"
+            }]
+        });
         return city || false;
     }
 

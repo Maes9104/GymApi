@@ -10,8 +10,7 @@ const UserService = userService(db.users);
 passport.use(new BasicStrategy(
     async function (email, password, cb) {
         try {
-            const user = await UserService.verifyUser(email);    
-            console.log(user);
+            const user = await UserService.verifyUser(email);
             if (!user) {
                 return cb(boom.unauthorized(), false);
             }

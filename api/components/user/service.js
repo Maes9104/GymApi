@@ -74,13 +74,24 @@ function userService(injectedStore) {
         return verifiedUser;
     }
 
+    const setAdminUser = async(req, res, next) => {
+        const { params } = req;
+        try {
+            const adminUser = await Controller.setAdminUser(params.userId);
+            response.success(req, res, adminUser, 200);
+        } catch (error) {
+            next(boom.boomify(error, { statusCode: 500 }));
+        }
+    }
+
     return {
         createUser,
         updateUser,
         deleteUser,
         getUsers,
         getUser,
-        verifyUser
+        verifyUser,
+        setAdminUser
     }
 }
 
